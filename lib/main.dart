@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:applifecyle_demo/lifecycle_manager.dart';
 import 'package:flutter/material.dart';
 
@@ -37,8 +35,9 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
   void _incrementCounter() {
-    exit(0);
-    setState(() {});
+    setState(() {
+      _counter++;
+    });
   }
 
   @override
