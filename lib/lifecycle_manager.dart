@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 class LifeCycleManager extends StatefulWidget {
@@ -20,7 +22,7 @@ class _LifeCycleManagerState extends State<LifeCycleManager>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    print('AppLifecycleState: $state');
+    log('AppLifecycleState: $state');
   }
 
   @override

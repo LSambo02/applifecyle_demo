@@ -1,12 +1,28 @@
+import 'dart:developer';
+
+import 'package:applifecyle_demo/inherited_example/color_button_state.dart';
 import 'package:applifecyle_demo/lifecycle_manager.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ColorButtonState(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String title = 'One';
+
+  void updateTitleAndColor() {
+    setState(() {
+      title = title == 'One' ? 'Whatever' : 'One';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +32,21 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        home: MyHomePage(
+          title: title,
+          onPressed: updateTitleAndColor,
+        ),
       ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title, required this.onPressed})
+      : super(key: key);
 
   final String title;
+  final VoidCallback onPressed;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -41,7 +62,35 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void didUpdateWidget(covariant MyHomePage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+    log('called didUpdateWidget');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    log('called didChangeDependencies');
+  }
+
+  @override
+  void deactivate() {
+    // TODO: implement deactivate
+    super.deactivate();
+    log('called deactivate');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final colorButton = ColorButtonState.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -61,9 +110,13 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        backgroundColor: colorButton.color,
+        // onPressed: widget.onPressed,
+        onPressed: () => colorButton.updateButtonColor(
+            colorButton.color == Colors.blueGrey
+                ? Colors.blue
+                : Colors.blueGrey),
+        child: const Icon(Icons.forward),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
