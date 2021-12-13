@@ -83,8 +83,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void deactivate() {
     // TODO: implement deactivate
-    super.deactivate();
     log('called deactivate');
+    super.deactivate();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    log('called dispose');
+    super.dispose();
   }
 
   @override
@@ -116,8 +123,31 @@ class _MyHomePageState extends State<MyHomePage> {
             colorButton.color == Colors.blueGrey
                 ? Colors.blue
                 : Colors.blueGrey),
+        // onPressed: () => Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (_) => SecondScreen())),
         child: const Icon(Icons.forward),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
+    );
+  }
+}
+
+class SecondScreen extends StatelessWidget {
+  const SecondScreen({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'SEGUNDA TELA',
+        ),
+      ),
+      body: Center(
+        child: Text(
+          'SEGUNDA TELA',
+          style: TextStyle(fontSize: 24),
+        ),
+      ),
     );
   }
 }
